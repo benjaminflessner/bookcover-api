@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 	"net/http"
 	"strconv"
 
@@ -38,7 +39,11 @@ func main() {
 		middlewares.JsonHeaderMiddleware(),
 		middlewares.CorsHeaderMiddleware(),
 	))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = strconv.Itoa(PORT)
+	}
 
-	fmt.Printf("Server listening at port %d 🚀\n", PORT)
-	http.ListenAndServe(":"+strconv.Itoa(PORT), nil)
+	fmt.Printf("Server listening at port %s 🚀\n", port)
+	http.ListenAndServe(":"+port, nil)
 }
